@@ -1,0 +1,20 @@
+*{margin:0px
+}
+
+body{background-image: url("how-to-create-cool-website-backgrounds-the-ultimate-guide.png");}
+.ha{display: flex;
+min-width: 20;
+justify-content: space-around;
+flex-direction: row;
+background-image: linear-gradient(to right,rgb(0, 255, 238),rgb(4, 175, 233),rgb(127, 197, 232),rgb(0, 81, 255),rgb(0, 64, 255));
+position: sticky;
+top: 0;
+z-index:100;}
+.hai{padding: 20px;}
+
+a:hover{color: green; background-color: white;}
+a:active{color: brown;
+background-color: yellow;}
+a:link{color: pink;}
+a{font-size:xx-large;
+text-decoration: none;}

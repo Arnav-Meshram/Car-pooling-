@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="project.css">
+</head>
+<body>
+    <h1 id="booking"></h1>
+    <div class="container">
+        <form action="results.html" method="GET">
+            <div>
+                <h2><label for="arrival">Arriving Location:</label></h2>
+                <select id="arrival" name="arrival">
+                    <option value="Dabolim airport">Dabolim Airport</option>
+                    <option value="Mopa Airport">Mopa Airport</option>
+                    <option value="Magaon Railway Station">Magaon Railway Station</option>
+                    <option value="vasco Railway station">vasco Railway station</option>
+                    <option value="Others">Others</option>
+                </select>
+                <br>
+                <h1></h1>
+                <input type="text" id ="others" name="other location" placeholder="other location" required>
+                <br>
+            </div>
+        
+            <div>
+                <h2><label for="leaving">Arriving Date:</label></h2>
+                <input type="date" id="leaving" name="leaving">
+            </div>
+        
+                <div>
+                <h2><label for="confirm" id="ticket">Ticket Booked?</label></h2>
+                <input id="indoor" type="radio" name="indoor-outdoor" value="yes"> Yes
+                <input id="outdoor" type="radio" name="indoor-outdoor" value="no"> No
+                </div>
+            <br> 
+
+            <button id="button1" type="submit">Submit</button>
+            <button id="button2" type="reset">Reset</button>
+        </form>
+
+    </div>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"; 
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3b_7JoxifL-NQadLoQQrcB-iZa485TR8",
+      authDomain: "carpooling-2bb6f.firebaseapp.com",
+      projectId: "carpooling-2bb6f",
+      storageBucket: "carpooling-2bb6f.appspot.com",
+      messagingSenderId: "1050043776626",
+      appId: "1:1050043776626:web:e57e85583c6d84aa390ceb"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+  
+    document.getElementById("button1").addEventListener('click', function(e){
+        e.preventDefault(); // prevent form submission
+        const ticketConfirmation = document.querySelector('input[name="indoor-outdoor"]:checked').value;
+        set(ref(db,'user/' + getArrivalLocation()), {
+            Location: getArrivalLocation(),
+            Arriving_Date: getLeavingDate(),
+            Ticket_confirmation: ticketConfirmation,
+            Other_Location: document.getElementById("others").value,
+        });
+        alert("Booking page Successfull !");
+    });
+
+    function handleArrivalChange() {
+        const arrivalSelect = document.getElementById("arrival");
+        const otherInput = document.getElementById("others");
+        if (arrivalSelect.value === "Others") {
+            otherInput.style.display = "block";
+        } else {
+            otherInput.style.display = "none";
+        }
+    }
+
+    function getArrivalLocation() {
+        const arrivalSelect = document.getElementById("arrival");
+        if (arrivalSelect.value === "Others") {
+            return document.getElementById("others").value;
+        } else {
+            return arrivalSelect.value;
+        }
+    }
+
+    function getLeavingDate() {
+        return document.getElementById("leaving").value;
+    }
+</script>
+</body>
+</html>

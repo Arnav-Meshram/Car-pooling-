@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        padding: 16px;
+        background-color: white;
+        margin: 0 auto;
+        width: 300px;
+        border: 1px solid black;
+        border-radius: 4px;
+      }
+      .inner-box {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        background: #f1f1f1;
+        box-sizing: border-box;
+      }
+      .inner-box input[type=text],
+      .inner-box input[type=password],
+      .inner-box input[type=email] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+      }
+      .inner-box input[type=text]:focus,
+      .inner-box input[type=password]:focus,
+      .inner-box input[type=email]:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+      .inner-box .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+      }
+      .inner-box .signupbtn {
+        background-color: #04AA6D;
+      }
+      .inner-box .signupbtn:hover {
+        opacity: 1;
+      }
+      .inner-box a {
+        color: #2196F3;
+      }
+      hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+      }
+    </style>
+    <script type="module" src="app.js" defer></script>
+   
+  </head>
+  <body>
+    
+    <div class="container">
+      <h1>
+        <select id="formSelector">
+          <option value="login">Login</option>
+          <option value="signup">Sign Up</option>
+        </select>
+      </h1>
+
+      <form action="/login" class="container" id="loginForm" style="display:none;" method="post">
+        <div class="inner-box">
+          <label for="email"><b>Email</b></label>
+          <input type="email" placeholder="Enter Email" name="email" required id="email">
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required id="password">
+
+          <button type="submit" class="btn">Login</button>
+        </div>
+      </form>
+
+      <form action="/signup" class="container" id="signUpForm" style="display:none;" method="post">
+        <div class="inner-box">
+          <label for="email"><b>Email</b></label>
+          <input type="email" placeholder="Enter Email" name="email" required id="email">
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required id="password">
+
+          
+
+          <button type="submit" id="submit" class="btn signupbtn">Sign Up</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function showSignUpForm() {
+        var loginForm = document.querySelector('#loginForm');
+        var signUpForm = document.querySelector('#signUpForm');
+
+        loginForm.style.display = 'none';
+        signUpForm.style.display = 'block';
+      }
+
+      function showLoginForm() {
+        var loginForm = document.querySelector('#loginForm');
+        var signUpForm = document.querySelector('#signUpForm');
+
+        loginForm.style.display = 'block';
+        signUpForm.style.display = 'none';
+      }
+
+      var formSelector = document.querySelector('#formSelector');
+      formSelector.addEventListener('change', function() {
+        if (formSelector.value === 'login') {
+          showLoginForm();
+        } else if (formSelector.value === 'signup') {
+          showSignUpForm();
+        }
+      });
+
+      showLoginForm();
+    </script>
+     <script type="module" src="app.js" defer></script>
+  </body>
+</html>

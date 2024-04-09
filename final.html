@@ -9,7 +9,15 @@
 <body>
     <h1 id="booking"></h1>
     <div class="container">
-        <form action="results.html" method="GET">
+        <form id="bookingForm">
+            <div>
+                <h2><label for="name">Name:</label></h2>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div>
+                <h2><label for="contact">Contact:</label></h2>
+                <input type="text" id="contact" name="contact" placeholder="Enter your contact number" required>
+            </div>
             <div>
                 <h2><label for="arrival">Arriving Location:</label></h2>
                 <select id="arrival" name="arrival">
@@ -21,7 +29,7 @@
                 </select>
                 <br>
                 <h1></h1>
-                <input type="text" id ="others" name="other location" placeholder="other location" required>
+                <input type="text" id="others" name="other_location" placeholder="other location" style="display: none;">
                 <br>
             </div>
         
@@ -30,25 +38,23 @@
                 <input type="date" id="leaving" name="leaving">
             </div>
         
-                <div>
+            <div>
                 <h2><label for="confirm" id="ticket">Ticket Booked?</label></h2>
                 <input id="indoor" type="radio" name="indoor-outdoor" value="yes"> Yes
                 <input id="outdoor" type="radio" name="indoor-outdoor" value="no"> No
-                </div>
+            </div>
             <br> 
 
-            <button id="button1" type="submit">Submit</button>
+            <button id="button1" type="button">Submit</button>
             <button id="button2" type="reset">Reset</button>
         </form>
-
     </div>
 
 <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"; 
+    import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"; 
   
-    // Your web app's Firebase configuration
+
     const firebaseConfig = {
       apiKey: "AIzaSyB3b_7JoxifL-NQadLoQQrcB-iZa485TR8",
       authDomain: "carpooling-2bb6f.firebaseapp.com",
@@ -57,22 +63,34 @@
       messagingSenderId: "1050043776626",
       appId: "1:1050043776626:web:e57e85583c6d84aa390ceb"
     };
-  
-    // Initialize Firebase
+
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
   
     document.getElementById("button1").addEventListener('click', function(e){
-        e.preventDefault(); // prevent form submission
+        e.preventDefault(); 
         const ticketConfirmation = document.querySelector('input[name="indoor-outdoor"]:checked').value;
-        set(ref(db,'user/' + getArrivalLocation()), {
-            Location: getArrivalLocation(),
-            Arriving_Date: getLeavingDate(),
+        const arrivalLocation = getArrivalLocation();
+        const leavingDate = getLeavingDate();
+        const name = document.getElementById("name").value;
+        const contact = document.getElementById("contact").value;
+
+  
+        const userRef = push(ref(db, `bookings/${leavingDate}`));
+
+ 
+        set(userRef, {
+            Name: name,
+            Contact: contact,
+            Location: arrivalLocation,
+            Arriving_location: arrivalLocation,
             Ticket_confirmation: ticketConfirmation,
             Other_Location: document.getElementById("others").value,
         });
-        alert("Booking page Successfull !");
+        alert("Booking page Successful !");
     });
+
+    document.getElementById("arrival").addEventListener('change', handleArrivalChange);
 
     function handleArrivalChange() {
         const arrivalSelect = document.getElementById("arrival");

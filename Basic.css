@@ -18,3 +18,15 @@ background-color: yellow;}
 a:link{color: pink;}
 a{font-size:xx-large;
 text-decoration: none;}
+
+button {
+    background-color: #29a3c5; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+  }
